@@ -1,3 +1,10 @@
+//Get Logged Client From DB
+const user = window.localStorage.getItem('user');
+const username = window.localStorage.getItem('username');
+if(username==null){
+    window.location="index.html";
+}
+
 const socket = io('http://localhost:8001', { transports : ['websocket'] });
 const form = document.getElementById('send-container');
 const messageInput = document.getElementById('messageInp');
@@ -11,8 +18,6 @@ form.addEventListener('submit',(e)=>{
     append(`<p>You: ${message}</p>`,'replies');
     socket.emit('send',message);
     messageInput.value = '';
-
-
 });
 
 const append = (message,position) =>{
@@ -46,7 +51,10 @@ const appendUserList = (userName) =>{
 };
 
 
-const name = prompt("Enter Your Name To Join CharRoom");
+
+//const name = prompt("Enter Your Name To Join CharRoom");
+const name = username;
+alert(name);
 socket.emit('new-user-joined',name);
 
 socket.on('user-joined',name =>{
